@@ -1,11 +1,12 @@
 // import { PageContainer } from '@/components/core/PageContainer/PageContainer';
 import { Button } from '@/components/ui/button';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from "./Home.module.css"
 import { Hexagon } from 'lucide-react';
 import { DrawerComponent } from '@/components/shared/DrawerComponent/DrawerComponent';
 import { RegisterForm } from '@/components/core/RegisterForm/RegisterForm';
+import { useAuthStore } from '@/states/AuthState';
 
 type HomeProps = {
   openLogin: () => void
@@ -13,8 +14,13 @@ type HomeProps = {
 
 export function Home({openLogin}: HomeProps) {
 
+  const checkAuth = useAuthStore((state) => state.checkAuth)
   const navigate = useNavigate();
   const [showRegister, setShowRegister] = useState(false);
+
+  useEffect(() => {
+    if(checkAuth()) navigate("/tasks")
+  }, [])
 
   function onOpenLogin(): void {
     setShowRegister(false);

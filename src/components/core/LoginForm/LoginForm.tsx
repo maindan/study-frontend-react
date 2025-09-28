@@ -33,7 +33,7 @@ export function LoginForm({close}: LoginProps) {
             const res = await axios.post(url + "auth", data);
             close();
             saveToken(res.data.token);
-            navigate("/profile");
+            navigate("/tasks");
         } catch(err) {
             console.log(err);
             toast.error("E-mail ou senha inválidos")

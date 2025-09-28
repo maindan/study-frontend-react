@@ -8,12 +8,12 @@
 import { BrowserRouter, Routes, Route, Link, NavLink } from "react-router-dom";
 import {Home} from "./pages/Home/Home";
 import { About } from "./pages/About/About";
-import { Riffle } from "./pages/Riffle/Riffle";
 import { Header } from "./components/core/Header/Header";
 import {PrivateRouter} from "./components/core/PrivateRouter/PrivateRouter";
 import { DrawerComponent } from "./components/shared/DrawerComponent/DrawerComponent";
 import { LoginForm } from "./components/core/LoginForm/LoginForm";
 import { useState } from "react";
+import { Tasks } from "./pages/Tasks/Tasks";
 
 
 export function App() {
@@ -23,16 +23,18 @@ export function App() {
   return (
     <BrowserRouter>
       <Header openLogin={() => setShowLogin(true)} />
+        
       <DrawerComponent title="Entrar" subtitle="Informe seus dados para prosseguir" open={showLogin} onOpenChange={setShowLogin}>
         <LoginForm close={() => setShowLogin(false)} />
       </DrawerComponent>
+
       <Routes>
         <Route path="/" element={<Home openLogin={() => setShowLogin(true)} />}/>
         <Route path="/sobre" element={<About />} />
-        <Route path="/rifa/:id" element={<Riffle />} />
-        <Route path="/profile" element={
+        {/* <Route path="/rifa/:id" element={<Riffle />} /> */}
+        <Route path="/tasks" element={
           <PrivateRouter>
-            <Riffle />
+            <Tasks />
           </PrivateRouter>
           } />
       </Routes>
