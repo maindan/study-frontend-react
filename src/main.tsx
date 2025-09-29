@@ -10,16 +10,15 @@ const client = new QueryClient();
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={client}>
-
+      <App />
+      <Toaster 
+      toastOptions={{
+        style: {
+          background: 'black',
+          color: 'white'
+        },
+      }}
+      position='top-center' />
     </QueryClientProvider>
-    <App />
-    <Toaster 
-    toastOptions={{
-      style: {
-        background: 'black',
-        color: 'white'
-      },
-    }}
-    position='top-center' />
   </StrictMode>,
 )
