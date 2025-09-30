@@ -4,27 +4,27 @@ import { persist } from "zustand/middleware";
 
 
 
-type ProfileState = {
-    profile: Profile | null;
-    setProfile: (data: Profile) => void;
-    getProfile: () => Profile | null;
+type StudyStt = {
+    study: StudyState | null;
+    setStudy: (data: StudyState) => void;
+    getStudy: () => StudyState | null;
 };
 
-export const useProfileStore = create<ProfileState>()(
+export const useStudyStore = create<StudyStt>()(
     persist(
         (set, get) => ({
-            profile: null,
+            study: null,
 
-            setProfile: (profile: Profile) => {
-                set({profile});
+            setStudy: (study: StudyState) => {
+                set({study});
             },
 
-            getProfile: () => {
-                return get().profile;
+            getStudy: () => {
+                return get().study;
             }
         }),
         {
-            name: "auth-storage",
+            name: "study-storage",
         }
     )
 )
