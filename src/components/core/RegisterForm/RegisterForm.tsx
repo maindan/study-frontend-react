@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '@/states/AuthState'
 import api from '@/core/security/interceptor'
 import { useProfileStore } from '@/states/ProfileState'
+import { useStudyStore } from '@/states/StudyState'
 
 const registerSchema = z.object({
   email: z.email("E-mail inválido"),
@@ -31,7 +32,8 @@ export function RegisterForm({openLogin}: RegisterProps) {
   const url = "http://localhost:8080/";
   const navigate = useNavigate();
   const saveToken = useAuthStore((state) => state.login);
-  const saveProfile = useProfileStore((state) => state.setProfile)
+  const saveProfile = useProfileStore((state) => state.setProfile);
+  const saveStudyState = useStudyStore((state) => state.setStudy);
 
   function handleRegister(data: RegisterSchema) {
     const userData = {
@@ -54,6 +56,7 @@ export function RegisterForm({openLogin}: RegisterProps) {
             saveToken(res.data.token);
             const profileRes = await api.post('profile', profileData);
             saveProfile(profileRes.data.profile);
+saveStudyState(profileRes.data.studyState);
             navigate('/tasks')
         } catch(err) {
             console.log(err);
