@@ -1,4 +1,4 @@
-import type { Profile } from "@/interfaces/profile";
+import type { StudyState } from "@/interfaces/studyState";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
