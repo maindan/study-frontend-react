@@ -5,13 +5,14 @@ type DialogProps = {
     title: string,
     subtitle?: string,
     saveBtnName?: string,
+    hideBtns?: boolean,
     children: React.ReactNode
     saveBtn: () => void,
     open: boolean,
     onOpenChange: (open: boolean) => void
 }
 
-export function DialogComponent({title, subtitle, saveBtnName, children, saveBtn, open, onOpenChange}: DialogProps) {
+export function DialogComponent({title, subtitle, hideBtns, saveBtnName, children, saveBtn, open, onOpenChange}: DialogProps) {
     return(
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent>
@@ -24,10 +25,13 @@ export function DialogComponent({title, subtitle, saveBtnName, children, saveBtn
                 </DialogHeader>
                     {children}
 
-                <DialogFooter>
-                    <Button variant="destructive" onClick={() => onOpenChange(false)}>Cancelar</Button>
-                    <Button onClick={saveBtn}>{saveBtnName?? 'Salvar'}</Button>
-                </DialogFooter>
+                {hideBtns ? <></> : 
+                
+                    <DialogFooter>
+                        <Button variant="destructive" onClick={() => onOpenChange(false)}>Cancelar</Button>
+                        <Button onClick={saveBtn}>{saveBtnName?? 'Salvar'}</Button>
+                    </DialogFooter>
+                }
 
             </DialogContent>
         </Dialog>
