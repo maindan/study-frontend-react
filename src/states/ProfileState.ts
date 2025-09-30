@@ -24,7 +24,7 @@ export const useProfileStore = create<ProfileState>()(
             }
         }),
         {
-            name: "auth-storage",
+            name: "profile-storage",
         }
     )
 )
