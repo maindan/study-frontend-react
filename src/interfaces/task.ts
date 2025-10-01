@@ -14,9 +14,9 @@ export interface TaskCreate {
 }
 
 export const TaskStatus = {
-  PENDENTE: "Pendente",
-  EM_ANDAMENTO: "Em andamento",
-  CONCLUIDO: "Concluído",
+  PENDENTE: "PENDENTE",
+  EM_ANDAMENTO: "EM_ANDAMENTO",
+  CONCLUIDO: "CONCLUIDO",
 } as const;
 
 export type TaskStatus = (typeof TaskStatus)[keyof typeof TaskStatus];

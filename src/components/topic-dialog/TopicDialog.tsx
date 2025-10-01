@@ -1,10 +1,29 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { DialogComponent } from '../shared/Dialog/DialogComponent'
+import { Input } from '../ui/input'
+import { Button } from '../ui/button'
+import { Search } from 'lucide-react'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+import { toast } from 'sonner'
+import api from '@/core/security/interceptor'
 
 export function TopicDialog({open, onOpenChange}: {open: boolean, onOpenChange: () => void}) {
+    const urlBase = "http://localhost:8080/"
+    const [topicName, setTopicName] = useState("");
 
-    function handleSave(): void {
-
+    async function handleSave(): Promise<void> {
+        if(topicName) {
+            const data = {name: topicName};
+            await api.post(urlBase + "topic", data);
+            toast.success("Tópico adicionado com sucesso!");
+            onOpenChange();
+        } else {
+            toast.info("Informe o nome do tópico para prosseguir")
+        }
     }
 
     return (
@@ -15,7 +34,20 @@ export function TopicDialog({open, onOpenChange}: {open: boolean, onOpenChange: 
         onOpenChange={onOpenChange}
         saveBtn={handleSave}
     >
-        <p>Tem algo aqui</p>
+        <div className="flex gap-1">
+            <Input placeholder="Nome do tópico" value={topicName} onChange={(e) => setTopicName(e.target.value)} />
+            <Tooltip>
+                <TooltipTrigger asChild>
+                    <Button className="cursor-pointer" size="icon" disabled={!topicName}>
+                        <Search />
+                    </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                    <p>Buscar sugestões de tarefas</p>
+                </TooltipContent>
+            </Tooltip>
+            
+        </div>
 
     </DialogComponent>
     )
