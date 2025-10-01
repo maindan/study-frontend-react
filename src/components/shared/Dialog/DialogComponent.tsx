@@ -28,8 +28,8 @@ export function DialogComponent({title, subtitle, hideBtns, saveBtnName, childre
                 {hideBtns ? <></> : 
                 
                     <DialogFooter>
-                        <Button variant="destructive" onClick={() => onOpenChange(false)}>Cancelar</Button>
-                        <Button onClick={saveBtn}>{saveBtnName?? 'Salvar'}</Button>
+                        <Button variant="destructive" onClick={() => onOpenChange(false)} className="cursor-pointer">Cancelar</Button>
+                        <Button onClick={saveBtn} className="cursor-pointer">{saveBtnName?? 'Salvar'}</Button>
                     </DialogFooter>
                 }
 

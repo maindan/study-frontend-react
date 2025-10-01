@@ -56,7 +56,7 @@ export function RegisterForm({openLogin}: RegisterProps) {
             saveToken(res.data.token);
             const profileRes = await api.post('profile', profileData);
             saveProfile(profileRes.data.profile);
-saveStudyState(profileRes.data.studyState);
+            saveStudyState(profileRes.data.study_state);
             navigate('/tasks')
         } catch(err) {
             console.log(err);

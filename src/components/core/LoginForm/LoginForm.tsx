@@ -8,6 +8,9 @@ import axios from 'axios'
 import { useAuthStore } from '@/states/AuthState'
 import { Navigate, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
+import { useProfileStore } from '@/states/ProfileState'
+import { useStudyStore } from '@/states/StudyState'
+import api from '@/core/security/interceptor'
 
 const loginSchema = z.object({
   email: z.email("E-mail inválido"),
@@ -20,11 +23,13 @@ type LoginProps = {
 }
 
 export function LoginForm({close}: LoginProps) {
+  const url = "http://localhost:8080/";
   const {register, handleSubmit, formState: { errors } } = useForm<LoginSchema>({resolver: zodResolver(loginSchema)});
   const [loading, setLoading] = useState(false);
-  const url = "http://localhost:8080/";
   const navigate = useNavigate();
-  const saveToken = useAuthStore((state) => state.login)
+  const saveToken = useAuthStore((state) => state.login);
+  const saveProfile = useProfileStore((state) => state.setProfile);
+  const saveStudyState = useStudyStore((state) => state.setStudy);
 
   function handleLogin(data: LoginSchema) {
     const fetchUser = async () => {
@@ -33,6 +38,10 @@ export function LoginForm({close}: LoginProps) {
             const res = await axios.post(url + "auth", data);
             close();
             saveToken(res.data.token);
+            const profileRes = await api.get(url + "profile");
+            saveProfile(profileRes.data)
+            const studyRes = await api.get(url + "study_state");
+            saveStudyState(studyRes.data);
             navigate("/tasks");
         } catch(err) {
             console.log(err);
