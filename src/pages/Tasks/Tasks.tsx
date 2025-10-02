@@ -12,6 +12,7 @@ import AnimatedContent from '@/components/AnimatedContent'
 import type { Topic } from '@/interfaces/topic'
 import { TopicSheet } from '@/components/topic-sheet/TopicSheet'
 import { Skeleton } from '@/components/ui/skeleton'
+import { useQueryClient } from '@tanstack/react-query'
 
 export function Tasks() {
   const { data: topics, isLoading: topicsLoading, isError: topicsError, error: topicsErrorMsg } = useTopic();
@@ -21,6 +22,7 @@ export function Tasks() {
     open: false,
     topic: null,
   });
+  const queryClient = useQueryClient();
 
   function handleTopicSheet(value: boolean) {
     setTopicState(prev => ({
@@ -40,6 +42,10 @@ export function Tasks() {
     setTopicDialog(!topicDialog);
   }
 
+  function handleTopicUpdate(): void {
+    queryClient.invalidateQueries({queryKey: ['topics']})
+  }
+
   // const {id} = useParams();
   // if(topicsLoading) return <p>Carregando...</p>
   if(topicsError) {
@@ -49,7 +55,7 @@ export function Tasks() {
   return (
     <PageContainer>
       <>
-        <TopicDialog open={topicDialog} onOpenChange={handleTopicDialog}  />
+        <TopicDialog open={topicDialog} onOpenChange={handleTopicDialog} onUpdate={handleTopicUpdate}  />
         <TopicSheet topic={topicState.topic} open={topicState.open} onOpenChange={handleTopicSheet} />
 
         <div className="flex flex-col items-start gap-3">

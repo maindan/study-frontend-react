@@ -1,19 +1,27 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { DialogComponent } from '../shared/Dialog/DialogComponent'
 import { Input } from '../ui/input'
-import { Button } from '../ui/button'
-import { Search } from 'lucide-react'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
+// import { Button } from '../ui/button'
+// import { Search } from 'lucide-react'
+// import {
+//   Tooltip,
+//   TooltipContent,
+//   TooltipTrigger,
+// } from "@/components/ui/tooltip"
 import { toast } from 'sonner'
 import api from '@/core/security/interceptor'
 
-export function TopicDialog({open, onOpenChange}: {open: boolean, onOpenChange: () => void}) {
+type TopicDialogType = {
+    open: boolean,
+    onOpenChange: () => void,
+    onUpdate: () => void
+}
+
+export function TopicDialog({open, onOpenChange, onUpdate}: TopicDialogType) {
     const urlBase = "http://localhost:8080/"
     const [topicName, setTopicName] = useState("");
+
+    useEffect(() => {setTopicName("")}, [open])
 
     async function handleSave(): Promise<void> {
         if(topicName) {
@@ -21,6 +29,7 @@ export function TopicDialog({open, onOpenChange}: {open: boolean, onOpenChange: 
             await api.post(urlBase + "topic", data);
             toast.success("Tópico adicionado com sucesso!");
             onOpenChange();
+            onUpdate();
         } else {
             toast.info("Informe o nome do tópico para prosseguir")
         }
@@ -36,7 +45,7 @@ export function TopicDialog({open, onOpenChange}: {open: boolean, onOpenChange: 
     >
         <div className="flex gap-1">
             <Input placeholder="Nome do tópico" value={topicName} onChange={(e) => setTopicName(e.target.value)} />
-            <Tooltip>
+            {/* <Tooltip>
                 <TooltipTrigger asChild>
                     <Button className="cursor-pointer" size="icon" disabled={!topicName}>
                         <Search />
@@ -45,7 +54,7 @@ export function TopicDialog({open, onOpenChange}: {open: boolean, onOpenChange: 
                 <TooltipContent>
                     <p>Buscar sugestões de tarefas</p>
                 </TooltipContent>
-            </Tooltip>
+            </Tooltip> */}
             
         </div>
 
