@@ -14,6 +14,7 @@ import { DrawerComponent } from "./components/shared/DrawerComponent/DrawerCompo
 import { LoginForm } from "./components/core/LoginForm/LoginForm";
 import { useState } from "react";
 import { Tasks } from "./pages/Tasks/Tasks";
+import { Contact } from "./pages/Contact/Contact";
 
 
 export function App() {
@@ -31,6 +32,7 @@ export function App() {
       <Routes>
         <Route path="/" element={<Home openLogin={() => setShowLogin(true)} />}/>
         <Route path="/sobre" element={<About openLogin={() => setShowLogin(true)}  />} />
+        <Route path="/contato" element={<Contact />} />
         {/* <Route path="/rifa/:id" element={<Riffle />} /> */}
         <Route path="/tasks" element={
           <PrivateRouter>
