@@ -30,7 +30,7 @@ export function App() {
 
       <Routes>
         <Route path="/" element={<Home openLogin={() => setShowLogin(true)} />}/>
-        <Route path="/sobre" element={<About />} />
+        <Route path="/sobre" element={<About openLogin={() => setShowLogin(true)}  />} />
         {/* <Route path="/rifa/:id" element={<Riffle />} /> */}
         <Route path="/tasks" element={
           <PrivateRouter>

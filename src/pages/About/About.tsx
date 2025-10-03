@@ -1,14 +1,16 @@
+import Aurora from '@/components/Aurora'
 import { PageContainer } from '@/components/core/PageContainer/PageContainer'
 import RotatingText from '@/components/RotatingText'
 import ScrollFloat from '@/components/ScrollFloat'
 import ScrollReveal from '@/components/ScrollReveal'
 import ScrollVelocity from '@/components/ScrollVelocity'
+import { Button } from '@/components/ui/button'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Hexagon } from 'lucide-react'
 import React, { useLayoutEffect, useRef } from 'react'
 
-export function About() {
+export function About({openLogin}: {openLogin: () => void}) {
 
   const el = useRef<HTMLDivElement | null>(null)
   const tl = useRef<gsap.core.Timeline | null>(null)
@@ -21,9 +23,8 @@ export function About() {
         scrollTrigger: {
           trigger: ".models-items",
           scrub: true,
-          markers: true,
-          start: "top 600px",
-          end: "bottom 450px"
+          start: "top 520px",
+          end: "bottom 350px",
         }
       })
       .fromTo("#model-1", {
@@ -55,16 +56,24 @@ export function About() {
 
   return (
     <PageContainer>
-      <div className="w-full relative rounded-t-2xl">
-        <div className="flex flex-col h-full">
+      <div className="w-full rounded-t-2xl">
+        <div className="flex flex-col h-full rounded-t-2xl">
           
-          <div className="w-full h-[600px] bg-black rounded-t-2xl flex flex-col items-center justify-center">
-            <div className="flex gap-2 items-center">
+          <div className="w-full h-[600px] bg-black flex flex-col items-center justify-center relative rounded-t-2xl">
+            <div className="w-full h-full absolute rounded-t-2xl overflow-hidden">
+              <Aurora
+                colorStops={["#3A29FF", "#FF94B4", "#FF3232"]}
+                blend={0.5}
+                amplitude={1.0}
+                speed={0.5}
+              />
+            </div>
+            <div className="flex gap-2 items-center z-10">
               <Hexagon color='white' size={30} />
               <h1 className='text-white font-semibold text-4xl'>Study</h1>
             </div>
             <div className="flex gap-2 items-center mt-3 flex-col sm:flex-row">
-              <h2 className="text-white text-3xl sm:text-4xl text-center">Organize seus estudos de forma</h2>
+              <h2 className="text-white text-3xl sm:text-4xl text-center z-10">Organize seus estudos de forma</h2>
               <RotatingText
                 texts={['Simples', 'Produtiva', 'Intuitiva']}
                 mainClassName="px-2 sm:px-2 md:px-3 bg-white text-black overflow-hidden py-0.5 sm:py-1 md:py-1 justify-center rounded-md text-3xl font-semibold"
@@ -101,7 +110,7 @@ export function About() {
             </ScrollReveal>
           </div>
           
-          <div className="w-full h-50 bg-black flex justify-center">
+          <div className="w-full h-40 bg-black px-4 text-center">
             <ScrollFloat
               animationDuration={1}
               ease='back.inOut(2)'
@@ -115,12 +124,20 @@ export function About() {
           </div>
 
           <div className="w-full h-[600px] bg-black flex items-center justify-center gap-3 models px-3" ref={el}>
-            <div className="w-1/3 h-40 bg-white models-items" id="model-1"></div>
-            <div className="w-1/3 h-40 bg-white models-items" id="model-2"></div>
-            <div className="w-1/3 h-40 bg-white models-items" id="model-3"></div>
+            <div className="w-1/3 h-40 models-items  p-3 flex items-center" id="model-1">
+                <p className='text-white text-2xl font-semibold text-center'>Crie tópicos de estudos</p>
+            </div>
+            <div className="w-1/3 h-40 models-items p-3 flex items-center" id="model-2">
+              <p className='text-white text-2xl font-semibold text-center'>Adicione atividades aos tópicos</p>
+            </div>
+            <div className="w-1/3 h-40 models-items p-3 flex items-center" id="model-3">
+              <p className='text-white text-2xl font-semibold text-center'>Gerêncie seus estudos com método Pomodoro</p>
+            </div>
           </div>
-          <div className="w-full h-90 bg-black"></div>
-          <div className="w-full h-90 bg-black"></div>
+          <div className="w-full h-[300px] bg-black rounded-b-2xl flex flex-col items-center justify-start">
+            <h3 className='text-white font-bold text-3xl text-center mb-3'>Entre e comece agora a organizar<br/> os seus estudos!</h3>
+            <Button variant="secondary" className='cursor-pointer' onClick={openLogin}>Entrar</Button>
+          </div>
         </div>
       </div>
     </PageContainer>
