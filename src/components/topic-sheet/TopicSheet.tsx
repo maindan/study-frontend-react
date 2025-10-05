@@ -5,15 +5,14 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
 } from "@/components/ui/sheet"
 import type { Topic } from '@/interfaces/topic'
 import { Calendar1, CalendarArrowUp, Ellipsis, ListChecks, Pencil, Percent, Trash } from 'lucide-react'
 import { Separator } from '../ui/separator'
-import { TooltipButton } from '../tooltip-btn/TooltipButton'
 import { Button } from '../ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu'
 import { DialogComponent } from '../shared/Dialog/DialogComponent'
+import { TaskScrollList } from '../task-scroll-list/TaskScrollList'
 
 type TopicSheetType = {
     topic: Topic | null,
@@ -58,7 +57,7 @@ export function TopicSheet({topic, open, onOpenChange, onUpdateValue}: TopicShee
                 <p>Deseja confirmar a exclusão do tópico <strong>{topic?.name}</strong>?</p>
             </DialogComponent>
             <Sheet open={open} onOpenChange={onOpenChange}>
-                <SheetContent>
+                <SheetContent className="flex flex-col h-screen max-h-screen overflow-hidden">
                         <SheetHeader>
                             <SheetTitle>
                                 <div className='max-w-11/12'>
@@ -82,7 +81,7 @@ export function TopicSheet({topic, open, onOpenChange, onUpdateValue}: TopicShee
                                 </DropdownMenu>
                                 
                             </SheetDescription>
-                            <Separator className="my-4 mt-2" />
+                            <Separator className=" mt-2" />
                             <div className="flex flex-col text-sm text-gray-600 gap-3">
                                 <div className="flex gap-2 items-center">
                                     <Calendar1 size={18} />
@@ -107,9 +106,13 @@ export function TopicSheet({topic, open, onOpenChange, onUpdateValue}: TopicShee
                             </div>
                             <div className="flex gap-2"></div>
                         </SheetHeader>
-                        <div className="flex flex-col px-3 w-full">
+                        <div className="flex flex-col px-3 w-full h-full">
                             <h2 className="font-semibold">Atividades</h2>
-                            <Separator className="my-4" />
+                            <Separator className="my-3" />
+                            <div className="overflow-hidden">
+                                
+                                <TaskScrollList></TaskScrollList>
+                            </div>
                         </div>
                 </SheetContent>
             </Sheet>
