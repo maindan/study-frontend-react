@@ -7,12 +7,13 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet"
 import type { Topic } from '@/interfaces/topic'
-import { Calendar1, CalendarArrowUp, Ellipsis, ListChecks, Pencil, Percent, Trash } from 'lucide-react'
+import { Calendar1, CalendarArrowUp, Ellipsis, ListChecks, Pencil, Percent, Plus, Trash } from 'lucide-react'
 import { Separator } from '../ui/separator'
 import { Button } from '../ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu'
 import { DialogComponent } from '../shared/Dialog/DialogComponent'
 import { TaskScrollList } from '../task-scroll-list/TaskScrollList'
+import { TooltipButton } from '../tooltip-btn/TooltipButton'
 
 type TopicSheetType = {
     topic: Topic | null,
@@ -45,6 +46,10 @@ export function TopicSheet({topic, open, onOpenChange, onUpdateValue}: TopicShee
         onUpdateValue();
     }
 
+    function addTask(): void {
+
+    }
+
     return (
         <>
             <DialogComponent
@@ -68,7 +73,7 @@ export function TopicSheet({topic, open, onOpenChange, onUpdateValue}: TopicShee
                                 <p>Detalhes de tópico</p>
                                 <DropdownMenu>
                                     <DropdownMenuTrigger>
-                                        <Button variant="ghost">
+                                        <Button variant="ghost" className="cursor-pointer">
                                             <Ellipsis />
                                         </Button>
                                     </DropdownMenuTrigger>
@@ -107,7 +112,12 @@ export function TopicSheet({topic, open, onOpenChange, onUpdateValue}: TopicShee
                             <div className="flex gap-2"></div>
                         </SheetHeader>
                         <div className="flex flex-col px-3 w-full h-full">
-                            <h2 className="font-semibold">Atividades</h2>
+                            <div className="flex items-center justify-between">
+                                <h2 className="font-semibold">Atividades</h2>
+                                <TooltipButton onClick={addTask} toolTip="Adicionar atividade" variant="ghost">
+                                    <Plus/>
+                                </TooltipButton>
+                            </div>
                             <Separator className="my-3" />
                             <div className="overflow-hidden">
                                 

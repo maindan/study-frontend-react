@@ -3,7 +3,7 @@ import axios from 'axios';
 import api from '@/core/security/interceptor';
 import type { Topic } from '@/interfaces/topic';
 
-const urlBase = "http://localhost:8080/"
+const urlBase = "http://159.112.180.77:8080/"
 
 const fetchTopics = async (): Promise<Topic[]> => {
     const res = await api.get(urlBase + 'topic');

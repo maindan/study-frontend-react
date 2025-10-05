@@ -23,7 +23,7 @@ type LoginProps = {
 }
 
 export function LoginForm({close}: LoginProps) {
-  const url = "http://localhost:8080/";
+  const url = "http://159.112.180.77:8080/";
   const {register, handleSubmit, formState: { errors } } = useForm<LoginSchema>({resolver: zodResolver(loginSchema)});
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();

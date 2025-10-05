@@ -18,7 +18,7 @@ type TopicDialogType = {
 }
 
 export function TopicDialog({open, onOpenChange, onUpdate}: TopicDialogType) {
-    const urlBase = "http://localhost:8080/"
+    const urlBase = "http://159.112.180.77:8080/"
     const [topicName, setTopicName] = useState("");
 
     useEffect(() => {setTopicName("")}, [open])

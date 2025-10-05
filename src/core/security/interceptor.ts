@@ -2,7 +2,7 @@ import axios from "axios";
 import { useAuthStore } from "@/states/AuthState"; // sua store do Zustand
 
 const api = axios.create({
-  baseURL: "http://localhost:8080/"
+  baseURL: "http://159.112.180.77:8080/"
 });
 
 
