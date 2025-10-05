@@ -2,7 +2,7 @@ import { ClipboardList, Pyramid, Sparkle } from 'lucide-react'
 import React from 'react'
 import { Progress } from '../ui/progress';
 import type { Topic } from '@/interfaces/topic';
-import CountUp from '../CountUp';
+import CountUp from '../react-bits/CountUp';
 
 export function TopicComponent({topic}: {topic: Topic}) {
 

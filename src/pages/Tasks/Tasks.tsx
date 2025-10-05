@@ -7,7 +7,7 @@ import { Plus } from 'lucide-react'
 import { toast } from 'sonner'
 import { useProfileStore } from '@/states/ProfileState'
 import { TopicDialog } from '@/components/topic-dialog/TopicDialog'
-import AnimatedContent from '@/components/AnimatedContent'
+import AnimatedContent from '@/components/react-bits/AnimatedContent'
 import type { Topic } from '@/interfaces/topic'
 import { TopicSheet } from '@/components/topic-sheet/TopicSheet'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -67,7 +67,7 @@ export function Tasks() {
     <PageContainer>
       <>
         <TopicDialog open={topicDialog} onOpenChange={handleTopicDialog} onUpdate={handleTopicUpdate} />
-        <TopicSheet topic={topicState.topic} open={topicState.open} onOpenChange={handleTopicSheet} />
+        <TopicSheet topic={topicState.topic} open={topicState.open} onOpenChange={handleTopicSheet} onUpdateValue={handleTopicUpdate} />
 
         <div className="flex flex-col items-start">
           <div className="flex items-center justify-between w-full mb-2">

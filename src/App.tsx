@@ -20,7 +20,6 @@ import { Contact } from "./pages/Contact/Contact";
 export function App() {
 
   const [showLogin, setShowLogin] = useState(false);
-
   return (
     <BrowserRouter>
       <Header openLogin={() => setShowLogin(true)} />

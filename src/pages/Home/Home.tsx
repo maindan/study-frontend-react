@@ -6,7 +6,7 @@ import { Hexagon } from 'lucide-react';
 import { DrawerComponent } from '@/components/shared/DrawerComponent/DrawerComponent';
 import { RegisterForm } from '@/components/core/RegisterForm/RegisterForm';
 import { useAuthStore } from '@/states/AuthState';
-import Silk from '@/components/Silk';
+import Silk from '@/components/react-bits/Silk';
 
 type HomeProps = {
   openLogin: () => void
