@@ -1,8 +1,9 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
-import path from 'path'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react-swc';
+import path from 'path';
 
-// https://vite.dev/config/
+// Tailwind agora só precisa do postcss.config.js, não precisa importar diretamente
+
 export default defineConfig({
   plugins: [react()],
   resolve: {
@@ -10,11 +11,4 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
-  build: {
-    outDir: 'dist',       // diretório de saída da build
-    sourcemap: false,     // opcional: não gerar sourcemaps em produção
-  },
-  server: {
-    port: 5173,
-  },
-})
+});
