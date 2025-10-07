@@ -90,11 +90,11 @@ export function Tasks() {
             </Button>
           </div>
 
-          <div className='flex flex-col w-full bg-black rounded-t-xl'>
-            <section className="h-55 border border-black rounded-t-xl bg-black flex items-center justify-center">
+          <div className='flex flex-col w-full'>
+            <section className="h-50 border border-black rounded-xl bg-black flex items-center justify-center">
               <h2 className="text-white font-bold">Pomodoro</h2>
             </section>
-            <section className={`py-4 px-2 h-70 ${topics && topics.length !== 0 ? 'grid grid-cols-1 md:grid-cols-3' : ''} gap-2 rounded-t-2xl bg-white`}>
+            <section className={`py-3 px-2 h-70 ${topics && topics.length !== 0 ? 'grid grid-cols-1 md:grid-cols-3' : ''} gap-2 rounded-xl mt-2`}>
               {topicsLoading ? (
                 <Skeleton className="w-1/3 h-30 rounded-2xl" />
               ) : totalItems > 0 ? (
@@ -116,7 +116,7 @@ export function Tasks() {
             </section>
           </div>
           {totalPages > 1 && (
-            <div className="flex items-center justify-center w-full">
+            <div className="flex items-center justify-center w-full mt-2">
               <Paginator
                 currentPage={page}
                 totalPages={totalPages}

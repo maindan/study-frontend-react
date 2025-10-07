@@ -57,7 +57,7 @@ html, body, #root {
 
 :root {
     --radius: 0.625rem;
-    --background: oklch(1 0 0);
+    --background: #e4e4e4;
     --foreground: oklch(0.129 0.042 264.695);
     --card: oklch(1 0 0);
     --card-foreground: oklch(0.129 0.042 264.695);
@@ -131,4 +131,13 @@ html, body, #root {
   body {
     @apply bg-background text-foreground;
     }
+}
+
+.shadow-effect {
+    box-shadow: inset 0 1px 2px #ffffff30,
+    0 1px 2px #00000030,
+    0 4px 8px #00000015;
+}
+.bg-second {
+    background: #f1f1f1;
 }

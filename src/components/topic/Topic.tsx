@@ -14,7 +14,7 @@ export function TopicComponent({topic}: {topic: Topic}) {
   }
 
   return (
-    <div className="flex flex-col p-3 w-full h-30 border-2 rounded-2xl bg-gray-950 text-white cursor-pointer">
+    <div className="flex flex-col p-3 w-full h-30 rounded-2xl bg-second shadow-effect cursor-pointer">
         <div className="flex w-full items-center gap-2">
             {/* <ClipboardList /> */}
             {/* <Sparkle size={20} /> */}
@@ -37,7 +37,7 @@ export function TopicComponent({topic}: {topic: Topic}) {
             <p className='text-sm'>%</p>
           </div>
         </div>
-        <Progress value={getTopicProgress()}  className='w-full' />
+        <Progress value={50}  className='w-full' />
     </div>
   )
 }
