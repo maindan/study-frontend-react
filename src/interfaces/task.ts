@@ -1,4 +1,4 @@
-export interface Task {
+export interface ITask {
   id: number;
   description: string;
   status: TaskStatus;
@@ -7,7 +7,7 @@ export interface Task {
   updated_at: string;
 }
 
-export interface TaskCreate {
+export interface ITaskCreate {
   description: string;
   status?: TaskStatus;
   topic_id?: number;

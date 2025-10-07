@@ -70,18 +70,23 @@ export function TopicSheet({topic, open, onOpenChange, onUpdateValue}: TopicShee
                                 </div>
                             </SheetTitle>
                             <SheetDescription className="flex items-center justify-between">
-                                <p>Detalhes de tópico</p>
+                                Detalhes de tópico
                                 <DropdownMenu>
-                                    <DropdownMenuTrigger>
-                                        <Button variant="ghost" className="cursor-pointer">
-                                            <Ellipsis />
+                                    <DropdownMenuTrigger asChild>
+                                        <Button variant="ghost" size="icon">
+                                        <Ellipsis />
                                         </Button>
                                     </DropdownMenuTrigger>
-                                    <DropdownMenuContent className="max-w-fit mr-5">
+
+                                    <DropdownMenuContent align="end" className="max-w-fit mr-5">
                                         <DropdownMenuLabel className="text-center">Opções</DropdownMenuLabel>
                                         <DropdownMenuSeparator />
-                                        <DropdownMenuItem onClick={editTopic}><Pencil /> Editar</DropdownMenuItem>
-                                        <DropdownMenuItem onClick={() => setConfirmDialog(true)}><Trash /> Excluir</DropdownMenuItem>
+                                        <DropdownMenuItem onClick={editTopic}>
+                                        <Pencil /> Editar
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem onClick={() => setConfirmDialog(true)}>
+                                        <Trash /> Excluir
+                                        </DropdownMenuItem>
                                     </DropdownMenuContent>
                                 </DropdownMenu>
                                 
@@ -111,7 +116,7 @@ export function TopicSheet({topic, open, onOpenChange, onUpdateValue}: TopicShee
                             </div>
                             <div className="flex gap-2"></div>
                         </SheetHeader>
-                        <div className="flex flex-col px-3 w-full h-full">
+                        <div className="flex flex-col px-3 w-full min-h-7/12 max-h-7/12">
                             <div className="flex items-center justify-between">
                                 <h2 className="font-semibold">Atividades</h2>
                                 <TooltipButton onClick={addTask} toolTip="Adicionar atividade" variant="ghost">
@@ -119,7 +124,7 @@ export function TopicSheet({topic, open, onOpenChange, onUpdateValue}: TopicShee
                                 </TooltipButton>
                             </div>
                             <Separator className="my-3" />
-                            <div className="overflow-hidden">
+                            <div className="h-full">
                                 
                                 <TaskScrollList></TaskScrollList>
                             </div>
