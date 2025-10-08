@@ -37,7 +37,7 @@ export function TopicComponent({topic}: {topic: Topic}) {
             <p className='text-sm'>%</p>
           </div>
         </div>
-        <Progress value={50}  className='w-full' />
+        <Progress value={100}  className='w-full' />
     </div>
   )
 }
