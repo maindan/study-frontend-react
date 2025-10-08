@@ -67,7 +67,7 @@ export function Tasks() {
     <PageContainer>
       <>
         <TopicDialog open={topicDialog} onOpenChange={handleTopicDialog} onUpdate={handleTopicUpdate} />
-        <TopicSheet topic={topicState.topic} open={topicState.open} onOpenChange={handleTopicSheet} onUpdateValue={handleTopicUpdate} />
+        <TopicSheet topicId={topicState.topic?.id} open={topicState.open} onOpenChange={handleTopicSheet} onUpdate={handleTopicUpdate} />
 
         <div className="flex flex-col items-start">
           <div className="flex items-center justify-between w-full mb-2">

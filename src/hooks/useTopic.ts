@@ -1,19 +1,30 @@
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import api from '@/core/security/interceptor';
 import type { Topic } from '@/interfaces/topic';
 
-const urlBase = "http://159.112.180.77:8080/"
+const urlBase = "http://159.112.180.77:8080/";
 
 const fetchTopics = async (): Promise<Topic[]> => {
-    const res = await api.get(urlBase + 'topic');
-    return res.data;
-}
+  const res = await api.get(urlBase + 'topic');
+  return res.data;
+};
+
+const fetchTopicById = async (id: number): Promise<Topic> => {
+  const res = await api.get(`${urlBase}topic/${id}`);
+  return res.data;
+};
 
 export function useTopic() {
-    const topics = useQuery({
-        queryKey: ['topics'],
-        queryFn: fetchTopics,
-    }) 
-    return topics;
+  return useQuery({
+    queryKey: ['topics'],
+    queryFn: fetchTopics,
+  });
+}
+
+export function useTopicById(id?: number) {
+  return useQuery({
+    queryKey: ['topic', id],
+    queryFn: () => fetchTopicById(id!),
+    enabled: !!id,
+  });
 }

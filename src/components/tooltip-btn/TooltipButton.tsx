@@ -21,7 +21,7 @@ export function TooltipButton({variant, children, disabled, onClick, toolTip}: T
                     {children}
                 </Button>
             </TooltipTrigger>
-            <TooltipContent>
+            <TooltipContent asChild>
                 <p className='mr-4 bg-gray-800 text-white text-sm py-0.5 px-1 rounded'>{toolTip??''}</p>
             </TooltipContent>
         </Tooltip>

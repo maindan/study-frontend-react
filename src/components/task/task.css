@@ -1,0 +1,11 @@
+.current {
+    background: blue;
+}
+
+.finished {
+    background: greenyellow;
+}
+
+.pending {
+    background: gainsboro;
+}
