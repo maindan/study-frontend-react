@@ -10,14 +10,15 @@ type ToolTipBtnProps = {
     disabled?: boolean;
     onClick: () => void;
     toolTip?: string;
+    className?: string;
 }
 
-export function TooltipButton({variant, children, disabled, onClick, toolTip}: ToolTipBtnProps) {
+export function TooltipButton({variant, children, disabled, onClick, toolTip, className}: ToolTipBtnProps) {
   return (
     <TooltipProvider>
         <Tooltip>
             <TooltipTrigger asChild>
-                <Button className="cursor-pointer" size="icon" variant={variant} disabled={disabled??false} onClick={onClick}>
+                <Button className={`cursor-pointer ${className}`} size="icon" variant={variant} disabled={disabled??false} onClick={onClick}>
                     {children}
                 </Button>
             </TooltipTrigger>

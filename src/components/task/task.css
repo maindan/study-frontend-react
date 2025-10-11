@@ -1,11 +1,14 @@
 .current {
-    background: blue;
+    background: #e3e7fd;
+    color: blue;
 }
 
 .finished {
-    background: greenyellow;
+    background: rgb(158, 168, 141);
+    color: white;
 }
 
 .pending {
-    background: gainsboro;
+    background: rgb(230, 230, 230);
+    color: black
 }

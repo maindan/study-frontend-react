@@ -75,6 +75,7 @@ export function TopicSheet({ topicId, open, onOpenChange, onUpdate }: TopicSheet
         open={confirmDialog}
         onOpenChange={setConfirmDialog}
         saveBtn={deleteTopic}
+        className='w-[450px]'
       >
         <p>Deseja confirmar a exclusão do tópico <strong>{topic?.name}</strong>?</p>
       </DialogComponent>
@@ -88,7 +89,7 @@ export function TopicSheet({ topicId, open, onOpenChange, onUpdate }: TopicSheet
       />
 
       <Sheet open={open} onOpenChange={onOpenChange}>
-        <SheetContent className="flex flex-col h-screen max-h-screen overflow-hidden">
+        <SheetContent className="flex flex-col h-screen max-h-screen overflow-hidden bg-slate-950 text-white border-0">
           {isLoading ? (
             <div className="flex flex-col gap-4 p-4">
               <Skeleton className="w-1/2 h-6" />
@@ -97,9 +98,9 @@ export function TopicSheet({ topicId, open, onOpenChange, onUpdate }: TopicSheet
           ) : (
             <>
               <SheetHeader>
-                <SheetTitle>
+                <SheetTitle asChild>
                   <div className="max-w-11/12">
-                    <h3>{topic?.name}</h3>
+                    <h3 className="text-white">{topic?.name}</h3>
                   </div>
                 </SheetTitle>
 
@@ -107,7 +108,7 @@ export function TopicSheet({ topicId, open, onOpenChange, onUpdate }: TopicSheet
                   Detalhes do tópico
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="icon">
+                      <Button size="icon" className='rounded-4xl cursor-pointer'>
                         <Ellipsis />
                       </Button>
                     </DropdownMenuTrigger>
@@ -115,10 +116,10 @@ export function TopicSheet({ topicId, open, onOpenChange, onUpdate }: TopicSheet
                     <DropdownMenuContent align="end" className="max-w-fit mr-5">
                       <DropdownMenuLabel className="text-center">Opções</DropdownMenuLabel>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem onClick={editTopic}>
+                      <DropdownMenuItem onClick={editTopic} className='cursor-pointer'>
                         <Pencil /> Editar
                       </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => setConfirmDialog(true)}>
+                      <DropdownMenuItem onClick={() => setConfirmDialog(true)} variant='destructive' className='cursor-pointer'>
                         <Trash /> Excluir
                       </DropdownMenuItem>
                     </DropdownMenuContent>
@@ -127,25 +128,33 @@ export function TopicSheet({ topicId, open, onOpenChange, onUpdate }: TopicSheet
 
                 <Separator className="mt-2" />
 
-                <div className="flex flex-col text-sm text-gray-600 gap-3">
-                  <div className="flex gap-2 items-center">
-                    <Calendar1 size={18} />
-                    <p><strong>Data de criação:</strong></p>
+                <div className="flex flex-col text-sm text-gray-300 gap-3">
+                  <div className="flex items-center">
+                    <div className="flex items-center gap-2 min-w-[230px]">
+                      <Calendar1 size={18} />
+                      <p><strong>Data de criação:</strong></p>
+                    </div>
                     <p>{topic?.created_at?.split('T')[0]}</p>
                   </div>
-                  <div className="flex gap-2 items-center">
-                    <CalendarArrowUp size={18} />
-                    <p><strong>Última alteração:</strong></p>
+                  <div className="flex items-center">
+                    <div className="flex items-center gap-2 min-w-[230px]">
+                      <CalendarArrowUp size={18} />
+                      <p><strong>Última alteração:</strong></p>
+                    </div>
                     <p>{topic?.updated_at?.split('T')[0]}</p>
                   </div>
-                  <div className="flex gap-2 items-center">
-                    <ListChecks size={18} />
-                    <p><strong>Quantidade de atividades:</strong></p>
+                  <div className="flex items-center">
+                    <div className="flex items-center gap-2 min-w-[230px]">
+                      <ListChecks size={18} />
+                      <p><strong>Quantidade de atividades:</strong></p>
+                    </div>
                     <p>{topic?.tasks?.length ?? 0}</p>
                   </div>
-                  <div className="flex gap-2 items-center">
-                    <Percent size={18} />
-                    <p><strong>Total concluído:</strong></p>
+                  <div className="flex items-center">
+                    <div className="flex items-center gap-2 min-w-[230px]">
+                      <Percent size={18} />
+                      <p><strong>Total concluído:</strong></p>
+                    </div>
                     <p>{getTotalFinished()}</p>
                   </div>
                 </div>
@@ -154,7 +163,7 @@ export function TopicSheet({ topicId, open, onOpenChange, onUpdate }: TopicSheet
               <div className="flex flex-col px-3 w-full min-h-7/12 max-h-7/12">
                 <div className="flex items-center justify-between">
                   <h2 className="font-semibold">Atividades</h2>
-                  <TooltipButton onClick={handleTaskForm} toolTip="Adicionar atividade" variant="ghost">
+                  <TooltipButton onClick={handleTaskForm} toolTip="Adicionar atividade" className='rounded-4xl'>
                     <Plus />
                   </TooltipButton>
                 </div>

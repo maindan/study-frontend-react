@@ -42,19 +42,10 @@ export function TopicDialog({open, onOpenChange, onUpdate}: TopicDialogType) {
         open={open}
         onOpenChange={onOpenChange}
         saveBtn={handleSave}
+        className='w-[400px]'
     >
         <div className="flex gap-1">
             <Input placeholder="Nome do tópico" value={topicName} onChange={(e) => setTopicName(e.target.value)} />
-            {/* <Tooltip>
-                <TooltipTrigger asChild>
-                    <Button className="cursor-pointer" size="icon" disabled={!topicName}>
-                        <Search />
-                    </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                    <p>Buscar sugestões de tarefas</p>
-                </TooltipContent>
-            </Tooltip> */}
             
         </div>
 

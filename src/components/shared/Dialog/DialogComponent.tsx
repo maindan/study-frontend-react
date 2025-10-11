@@ -9,13 +9,14 @@ type DialogProps = {
     children: React.ReactNode
     saveBtn: () => void,
     open: boolean,
+    className?: string,
     onOpenChange: (open: boolean) => void
 }
 
-export function DialogComponent({title, subtitle, hideBtns, saveBtnName, children, saveBtn, open, onOpenChange}: DialogProps) {
+export function DialogComponent({title, subtitle, hideBtns, saveBtnName, children, saveBtn, open, onOpenChange, className}: DialogProps) {
     return(
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent>
+            <DialogContent className={`text-white bg-slate-950 border-slate-700 ${className}`}>
 
                 <DialogHeader>
                     <DialogTitle>{title}</DialogTitle>
