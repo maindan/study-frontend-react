@@ -29,7 +29,7 @@ type RegisterProps = {
 export function RegisterForm({openLogin}: RegisterProps) {
   const {register, handleSubmit, formState: { errors } } = useForm<RegisterSchema>({resolver: zodResolver(registerSchema)});
   const [loading, setLoading] = useState(false);
-  const url = "http://159.112.180.77:8080/";
+  const url = import.meta.env.VITE_API_BASE_URL;
   const navigate = useNavigate();
   const saveToken = useAuthStore((state) => state.login);
   const saveProfile = useProfileStore((state) => state.setProfile);

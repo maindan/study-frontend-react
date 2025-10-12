@@ -16,7 +16,7 @@ type TaskFormModalProps = {
 }
 
 export function TaskFormModal({ open, onOpenChange, onUpdate, topicId, taskToEdit }: TaskFormModalProps) {
-  const urlBase = "http://159.112.180.77:8080/"
+  const urlBase = import.meta.env.VITE_API_BASE_URL
   const [description, setDescription] = useState("")
   const isEditMode = !!taskToEdit
 

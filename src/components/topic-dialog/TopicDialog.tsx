@@ -18,7 +18,7 @@ type TopicDialogType = {
 }
 
 export function TopicDialog({open, onOpenChange, onUpdate}: TopicDialogType) {
-    const urlBase = "http://159.112.180.77:8080/"
+    const urlBase = import.meta.env.VITE_API_BASE_URL
     const [topicName, setTopicName] = useState("");
 
     useEffect(() => {setTopicName("")}, [open])
