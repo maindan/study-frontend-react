@@ -36,12 +36,12 @@ export function LoginForm({close}: LoginProps) {
     const fetchUser = async () => {
         setLoading(true);
         try {
-            const res = await axios.post(url + "auth", data);
+            const res = await axios.post(url + "/auth", data);
             close();
             saveToken(res.data.token);
-            const profileRes = await api.get(url + "profile");
+            const profileRes = await api.get(url + "/profile");
             saveProfile(profileRes.data)
-            const studyRes = await api.get(url + "study_state");
+            const studyRes = await api.get(url + "/study_state");
             saveStudyState(studyRes.data);
             navigate("/tasks");
         } catch(err) {

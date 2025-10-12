@@ -51,10 +51,10 @@ export function RegisterForm({openLogin}: RegisterProps) {
     const fetchUser = async () => {
         setLoading(true);
         try {
-            await axios.post(url + "user/create", userData);
-            const res = await axios.post(url + "auth", data);
+            await axios.post(url + "/user/create", userData);
+            const res = await axios.post(url + "/auth", data);
             saveToken(res.data.token);
-            const profileRes = await api.post('profile', profileData);
+            const profileRes = await api.post('/profile', profileData);
             saveProfile(profileRes.data.profile);
             saveStudyState(profileRes.data.study_state);
             navigate('/tasks')
