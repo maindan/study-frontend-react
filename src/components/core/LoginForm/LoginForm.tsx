@@ -32,6 +32,7 @@ export function LoginForm({close}: LoginProps) {
   const saveStudyState = useStudyStore((state) => state.setStudy);
 
   function handleLogin(data: LoginSchema) {
+    console.log("url: ", url)
     const fetchUser = async () => {
         setLoading(true);
         try {
