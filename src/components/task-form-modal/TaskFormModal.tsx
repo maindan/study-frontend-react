@@ -34,10 +34,10 @@ export function TaskFormModal({ open, onOpenChange, onUpdate, topicId, taskToEdi
 
     try {
       if (isEditMode && taskToEdit?.id) {
-        await api.put(`${urlBase}task/${taskToEdit.id}`, { description })
+        await api.put(`${urlBase}/task/${taskToEdit.id}`, { description })
         toast.success("Tarefa atualizada com sucesso!")
       } else {
-        await api.post(`${urlBase}task`, {
+        await api.post(`${urlBase}/task`, {
           description,
           topic_id: topicId,
         })

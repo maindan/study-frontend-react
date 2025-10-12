@@ -26,7 +26,7 @@ export function TopicDialog({open, onOpenChange, onUpdate}: TopicDialogType) {
     async function handleSave(): Promise<void> {
         if(topicName) {
             const data = {name: topicName};
-            await api.post(urlBase + "topic", data);
+            await api.post(urlBase + "/topic", data);
             toast.success("Tópico adicionado com sucesso!");
             onOpenChange();
             onUpdate();
