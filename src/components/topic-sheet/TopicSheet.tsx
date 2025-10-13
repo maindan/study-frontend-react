@@ -20,6 +20,8 @@ import { Skeleton } from '../ui/skeleton'
 import { useQueryClient } from '@tanstack/react-query'
 import api from '@/core/security/interceptor'
 import { toast } from 'sonner'
+import type { StudyState } from '@/interfaces/studyState'
+import { useStudyStore } from '@/states/StudyState'
 
 type TopicSheetType = {
   topicId: number | undefined;
@@ -34,6 +36,7 @@ export function TopicSheet({ topicId, open, onOpenChange, onUpdate, onEditTopic 
   const [taskForm, setTaskForm] = useState(false);
   const [taskSelected, setTaskSelected] = useState<ITask | null>(null);
   const [deleteType, setDeleteType] = useState<'topic' | 'task' | null>(null);
+  const saveStudyState = useStudyStore((state) => state.setStudy);
   const urlBase = import.meta.env.VITE_API_BASE_URL;
 
   const queryClient = useQueryClient();
@@ -94,6 +97,8 @@ export function TopicSheet({ topicId, open, onOpenChange, onUpdate, onEditTopic 
     }
   }
 
+  
+
   function handleDeleteDialog(type: 'topic' | 'task', id?: number): void {
     if (type === 'task' && id) {
       const task = getTaskById(id);
@@ -105,6 +110,30 @@ export function TopicSheet({ topicId, open, onOpenChange, onUpdate, onEditTopic 
 
   function getTaskById(id: number): ITask | undefined {
     return topic?.tasks.find((item) => item.id === id);
+  }
+
+  async function onStartTask(id: number): Promise<void> {
+    try {
+      const response = await api.get<StudyState>(`${urlBase}/task/${id}/start`);
+      saveStudyState(response.data);
+      handleTaskUpdate();
+      toast.success("Atividade iniciado com sucesso!")
+    } catch(err) {
+      console.log(err);
+      toast.error("Erro ao iniciar atividade")
+    }
+  }
+
+  async function onFinishTask(id: number): Promise<void> {
+    try {
+      const response = await api.get<StudyState>(`${urlBase}/task/${id}/finish`);
+      saveStudyState(response.data);
+      handleTaskUpdate();
+      toast.success("Atividade finalizada com sucesso!")
+    } catch(err) {
+      console.log(err);
+      toast.error("Erro ao finalizar atividade")
+    }
   }
 
   return (
@@ -267,6 +296,8 @@ export function TopicSheet({ topicId, open, onOpenChange, onUpdate, onEditTopic 
                   taskList={topic?.tasks || []}
                   onEdit={handleTaskEdit}
                   onDelete={(id) => handleDeleteDialog('task', id)}
+                  onStartTask={onStartTask}
+                  onFinishTask={onFinishTask}
                 />
               )}
             </div>
