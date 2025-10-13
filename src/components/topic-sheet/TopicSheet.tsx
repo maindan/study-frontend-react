@@ -18,18 +18,23 @@ import type { ITask } from '@/interfaces/task'
 import { useTopicById } from '@/hooks/useTopic'
 import { Skeleton } from '../ui/skeleton'
 import { useQueryClient } from '@tanstack/react-query'
+import api from '@/core/security/interceptor'
+import { toast } from 'sonner'
 
 type TopicSheetType = {
   topicId: number | undefined;
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onUpdate: () => void;
+  onUpdate: (isDelete?:boolean) => void;
+  onEditTopic: (topicId: number) => void;
 }
 
-export function TopicSheet({ topicId, open, onOpenChange, onUpdate }: TopicSheetType) {
+export function TopicSheet({ topicId, open, onOpenChange, onUpdate, onEditTopic }: TopicSheetType) {
   const [confirmDialog, setConfirmDialog] = useState(false);
   const [taskForm, setTaskForm] = useState(false);
   const [taskSelected, setTaskSelected] = useState<ITask | null>(null);
+  const [deleteType, setDeleteType] = useState<'topic' | 'task' | null>(null);
+  const urlBase = import.meta.env.VITE_API_BASE_URL;
   
   const queryClient = useQueryClient();
 
@@ -47,24 +52,61 @@ export function TopicSheet({ topicId, open, onOpenChange, onUpdate }: TopicSheet
   }
 
   function editTopic(): void {
-    // implementar depois
+    topicId && onEditTopic(topicId)
   }
 
-  function deleteTopic(): void {
-    // implementar a exclusão
-    onOpenChange(false);
-    setConfirmDialog(false);
-    queryClient.invalidateQueries({ queryKey: ['topics'] });
+  async function handleDelete(): Promise<void> {
+    try {
+      if (deleteType === 'task' && taskSelected) {
+        await api.delete(`${urlBase}/task/${taskSelected.id}`);
+        toast.success("Atividade deletada com sucesso!");
+      } else if (deleteType === 'topic' && topic) {
+        await api.delete(`${urlBase}/topic/${topic.id}`);
+        setConfirmDialog(false);
+        onUpdate(true)
+        toast.success("Tópico deletado com sucesso!");
+      }
+      setConfirmDialog(false);
+      setTaskSelected(null);
+      setDeleteType(null);
+      queryClient.invalidateQueries({ queryKey: ['topics'] });
+      refetch();
+      onUpdate();
+    } catch (err) {
+      toast.error("Erro ao deletar.");
+    }
   }
 
   function handleTaskForm(): void {
     setTaskForm(!taskForm);
+    if(taskForm) setTaskSelected(null);
   }
   
   function handleTaskUpdate(): void {
     refetch();
     queryClient.invalidateQueries({ queryKey: ['topics'] });
     onUpdate()
+  }
+
+  function handleTaskEdit(id: number): void {
+    const task = getTaskById(id);
+    if(task) {
+      setTaskSelected(task);
+      handleTaskForm();
+    }
+  }
+
+  function handleDeleteDialog(type: 'topic' | 'task', id?: number): void {
+    if (type === 'task' && id) {
+      const task = getTaskById(id);
+      if (task) setTaskSelected(task);
+    }
+    setDeleteType(type);
+    setConfirmDialog(true);
+  }
+
+  function getTaskById(id: number): ITask | undefined {
+    return topic?.tasks.find((item) => item.id === id);
   }
 
   return (
@@ -74,10 +116,17 @@ export function TopicSheet({ topicId, open, onOpenChange, onUpdate }: TopicSheet
         saveBtnName="Excluir"
         open={confirmDialog}
         onOpenChange={setConfirmDialog}
-        saveBtn={deleteTopic}
+        saveBtn={handleDelete}
         className='w-[450px]'
       >
-        <p>Deseja confirmar a exclusão do tópico <strong>{topic?.name}</strong>?</p>
+        <p>
+          Deseja confirmar a exclusão {deleteType === 'task' ? 'da atividade' : 'do tópico'}
+          <strong className='ml-1'>
+            {deleteType === 'task'
+              ? ``
+              : `“${topic?.name ?? ''}”`}
+          </strong>?
+        </p>
       </DialogComponent>
 
       <TaskFormModal
@@ -119,7 +168,7 @@ export function TopicSheet({ topicId, open, onOpenChange, onUpdate }: TopicSheet
                       <DropdownMenuItem onClick={editTopic} className='cursor-pointer'>
                         <Pencil /> Editar
                       </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => setConfirmDialog(true)} variant='destructive' className='cursor-pointer'>
+                      <DropdownMenuItem onClick={() => handleDeleteDialog('topic')} variant='destructive' className='cursor-pointer'>
                         <Trash /> Excluir
                       </DropdownMenuItem>
                     </DropdownMenuContent>
@@ -169,7 +218,7 @@ export function TopicSheet({ topicId, open, onOpenChange, onUpdate }: TopicSheet
                 </div>
                 <Separator className="my-3" />
                 <div className="h-full overflow-y-auto">
-                  <TaskScrollList taskList={topic?.tasks || []} />
+                  <TaskScrollList taskList={topic?.tasks || []} onEdit={handleTaskEdit} onDelete={(id) => handleDeleteDialog('task', id)}  />
                 </div>
               </div>
             </>

@@ -33,11 +33,10 @@ export function TopicComponent({topic}: {topic: Topic}) {
               duration={1}
               className="text-5xl"
             />
-            {/* <p className='text-5xl'>{getTopicProgress().toFixed(0)}</p> */}
             <p className='text-sm'>%</p>
           </div>
         </div>
-        <Progress value={100}  className='w-full' />
+        <Progress value={Number(getTopicProgress().toFixed())}  className='w-full' />
     </div>
   )
 }

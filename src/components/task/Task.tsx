@@ -1,14 +1,16 @@
 import type { ITask } from '@/interfaces/task'
-import { Pause, Play, Trash } from 'lucide-react'
+import { Pause, Pencil, Play, Trash } from 'lucide-react'
 import React from 'react'
 import { Button } from '../ui/button'
 import "./task.css"
 
 type TaskProp = {
-  task: ITask
+  task: ITask;
+  onEdit: (id: number) => void;
+  onDelete: (id: number) => void;
 }
 
-export function Task({task}: TaskProp) {
+export function Task({task, onEdit, onDelete}: TaskProp) {
 
   function getStatusClass():string {
     if(task.status == "PENDENTE") return "pending"
@@ -31,7 +33,8 @@ export function Task({task}: TaskProp) {
             (<Button size="icon" className=" cursor-pointer rounded-4xl"><Play/></Button>)
           }
           
-          <Button size="icon" className=" cursor-pointer rounded-4xl" variant="destructive"><Trash/></Button>
+          <Button size="icon" className=" cursor-pointer rounded-4xl" variant="ghost" onClick={() => onEdit(task.id)}><Pencil/></Button>
+          <Button size="icon" className=" cursor-pointer rounded-4xl" variant="destructive" onClick={() => onDelete(task.id)}><Trash/></Button>
         </div>
       </div>
     </div>

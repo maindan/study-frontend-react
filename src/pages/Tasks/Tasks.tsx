@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import { PageContainer } from '@/components/core/PageContainer/PageContainer'
 import { TopicComponent } from '@/components/topic/Topic'
 import { useTopic } from '@/hooks/useTopic'
@@ -17,20 +17,27 @@ import { Paginator } from '@/components/core/Paginator/Paginator'
 const ITEMS_PER_PAGE = 6
 
 export function Tasks() {
-  const { data: topics, isLoading: topicsLoading, isError: topicsError, error: topicsErrorMsg } = useTopic();
+  const { data: responseData, isLoading: topicsLoading, isError: topicsError, error: topicsErrorMsg } = useTopic();
   const profile = useProfileStore((state) => state.getProfile);
   const [topicDialog, setTopicDialog] = useState(false);
   const [topicState, setTopicState] = useState<{ open: boolean, topic: Topic | null }>({
     open: false,
     topic: null,
   });
+  const [topicSelected, setTopicSelected] = useState<Topic | null>(null);
+  const [topics, setTopics] = useState<Topic[]>([]);
+  
   const queryClient = useQueryClient();
-
+  
   const [page, setPage] = useState(1);
-
+  
   const totalItems = topics ? topics.length : 0;
   const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
-
+  
+  useEffect(() => {
+    setTopics(responseData ? responseData.sort((a, b) => a.id - b.id) : [])
+  }, [responseData])
+  
   const paginatedTopics = useMemo(() => {
     if (!topics) return [];
     const startIndex = (page - 1) * ITEMS_PER_PAGE;
@@ -53,9 +60,13 @@ export function Tasks() {
 
   function handleTopicDialog(): void {
     setTopicDialog(!topicDialog);
+    if(topicDialog) setTopicSelected(null);
   }
 
-  function handleTopicUpdate(): void {
+  function handleTopicUpdate(isDelete?: boolean): void {
+    if(isDelete) {
+      handleTopicSheet(false);
+    }
     queryClient.invalidateQueries({ queryKey: ['topics'] })
   }
 
@@ -63,11 +74,20 @@ export function Tasks() {
     toast.error(String(topicsErrorMsg))
   }
 
+  function editTopic(id: number): void {
+    const topic = topics?.find((item) => item.id == id);
+    if(topic) {
+      handleTopicSheet(false);
+      setTopicSelected(topic);
+      handleTopicDialog();
+    }
+  }
+
   return (
     <PageContainer>
       <>
-        <TopicDialog open={topicDialog} onOpenChange={handleTopicDialog} onUpdate={handleTopicUpdate} />
-        <TopicSheet topicId={topicState.topic?.id} open={topicState.open} onOpenChange={handleTopicSheet} onUpdate={handleTopicUpdate} />
+        <TopicDialog open={topicDialog} onOpenChange={handleTopicDialog} onUpdate={handleTopicUpdate} topic={topicSelected} />
+        <TopicSheet topicId={topicState.topic?.id} open={topicState.open} onOpenChange={handleTopicSheet} onUpdate={handleTopicUpdate} onEditTopic={editTopic} />
 
         <div className="flex flex-col items-start">
           <div className="flex items-center justify-between w-full mb-2">
