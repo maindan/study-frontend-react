@@ -20,7 +20,7 @@ export function Header({openLogin}: HeaderProps) {
     }
 
     return(
-        <header className="w-full h-15 flex items-center justify-between px-5 border">
+        <header className="w-full h-15 flex items-center justify-between px-5">
             <div className="w-full sm:max-w-4xl mx-auto">
                 <div className={`w-full flex items-center ${checkAuth() ? 'justify-between' : 'justify-between'}`}>
                     <div className="flex gap-2 items-center">
