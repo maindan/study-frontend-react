@@ -97,8 +97,6 @@ export function TopicSheet({ topicId, open, onOpenChange, onUpdate, onEditTopic 
     }
   }
 
-  
-
   function handleDeleteDialog(type: 'topic' | 'task', id?: number): void {
     if (type === 'task' && id) {
       const task = getTaskById(id);
