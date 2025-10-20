@@ -15,23 +15,33 @@ import { LoginForm } from "./components/core/LoginForm/LoginForm";
 import { useState } from "react";
 import { Tasks } from "./pages/Tasks/Tasks";
 import { Contact } from "./pages/Contact/Contact";
+import { PasswordRecovery } from "./components/core/PasswordRecovery/PasswordRecovery";
 
 
 export function App() {
 
   const [showLogin, setShowLogin] = useState(false);
+  const [showRecoveryModal, setShowRecoveryModal] = useState(false);
+
+  function showRecovery(): void {
+    setShowLogin(false);
+    setTimeout(() => {setShowRecoveryModal(true)}, 100)
+  }
+
   return (
     <BrowserRouter>
       <Header openLogin={() => setShowLogin(true)} />
         
       <DrawerComponent title="Entrar" subtitle="Informe seus dados para prosseguir" open={showLogin} onOpenChange={setShowLogin}>
-        <LoginForm close={() => setShowLogin(false)} />
+        <LoginForm close={() => setShowLogin(false)} showRecovery={showRecovery}/>
       </DrawerComponent>
+
+      <PasswordRecovery  open={showRecoveryModal} onOpenChange={setShowRecoveryModal}  />
 
       <Routes>
         <Route path="/" element={<Home openLogin={() => setShowLogin(true)} />}/>
         <Route path="/sobre" element={<About openLogin={() => setShowLogin(true)}  />} />
-        <Route path="/contato" element={<Contact />} />
+        {/* <Route path="/contato" element={<Contact />} /> */}
         {/* <Route path="/rifa/:id" element={<Riffle />} /> */}
         <Route path="/tasks" element={
           <PrivateRouter>

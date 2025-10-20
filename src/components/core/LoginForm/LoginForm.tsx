@@ -19,10 +19,11 @@ const loginSchema = z.object({
 
 type LoginSchema = z.infer<typeof loginSchema>
 type LoginProps = {
-  close: () => void
+  close: () => void;
+  showRecovery: () => void;
 }
 
-export function LoginForm({close}: LoginProps) {
+export function LoginForm({close, showRecovery}: LoginProps) {
   const url = import.meta.env.VITE_API_BASE_URL;
   const {register, handleSubmit, formState: { errors } } = useForm<LoginSchema>({resolver: zodResolver(loginSchema)});
   const [loading, setLoading] = useState(false);
@@ -61,8 +62,9 @@ export function LoginForm({close}: LoginProps) {
         {errors.email && <p className='text-red-500 text-sm absolute mt-10 left-0'>{errors.email.message}</p>}
         <Input placeholder="Senha" type="password" {...register("password")} className={errors.password?.message? 'border-red-700 border-2':''} />
         {errors.password && <p className='text-red-500 text-sm absolute mt-26 left-0'>{errors.password.message}</p>}
-        <div className='flex gap-2 w-full'>
-            <Button variant="secondary" className='cursor-pointer w-full' type="submit" disabled={loading}>Entrar</Button>
+        <div className='flex flex-col gap-2 w-full items-center'>
+          <Button variant="secondary" className='cursor-pointer w-full' type="submit" disabled={loading}>Entrar</Button>
+          <p className='hover:underline cursor-pointer' onClick={showRecovery}>Esqueci minha senha</p>
         </div>
     </form>
   )

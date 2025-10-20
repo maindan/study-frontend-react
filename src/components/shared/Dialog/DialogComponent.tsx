@@ -2,12 +2,12 @@ import { Button } from "@/components/ui/button"
 import { Dialog, DialogHeader, DialogTitle, DialogDescription, DialogContent, DialogFooter } from "@/components/ui/dialog"
 
 type DialogProps = {
-    title: string,
+    title?: string,
     subtitle?: string,
     saveBtnName?: string,
     hideBtns?: boolean,
     children: React.ReactNode
-    saveBtn: () => void,
+    saveBtn?: () => void,
     open: boolean,
     className?: string,
     onOpenChange: (open: boolean) => void
@@ -19,7 +19,8 @@ export function DialogComponent({title, subtitle, hideBtns, saveBtnName, childre
             <DialogContent className={`text-white bg-slate-950 border-slate-700 ${className}`}>
 
                 <DialogHeader>
-                    <DialogTitle>{title}</DialogTitle>
+
+                    <DialogTitle>{title && title}</DialogTitle>
                     { subtitle &&
                         <DialogDescription>{subtitle}</DialogDescription>
                     }

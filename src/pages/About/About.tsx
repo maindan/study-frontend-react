@@ -56,7 +56,7 @@ export function About({openLogin}: {openLogin: () => void}) {
 
   return (
     <PageContainer>
-      <div className="w-full rounded-t-2xl">
+      <div className="w-full rounded-t-2xl scroll-smooth">
         <div className="flex flex-col h-full rounded-t-2xl">
           
           <div className="w-full h-[600px] bg-black flex flex-col items-center justify-center relative rounded-t-2xl">
