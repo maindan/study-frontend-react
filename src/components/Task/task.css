@@ -1,0 +1,14 @@
+.current {
+    background: #e3e7fd;
+    color: blue;
+}
+
+.finished {
+    background: rgb(158, 168, 141);
+    color: white;
+}
+
+.pending {
+    background: rgb(230, 230, 230);
+    color: black
+}
