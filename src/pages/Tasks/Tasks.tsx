@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react'
 import { PageContainer } from '@/components/core/PageContainer/PageContainer'
-import { TopicComponent } from '@/components/Topic/Topic'
+import { TopicComponent } from '@/components/Topic/TopicComponent'
 import { useTopic } from '@/hooks/useTopic'
 import { Button } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
