@@ -12,7 +12,7 @@ type TaskProp = {
   onFinishTask: (id: number) => void;
 }
 
-export function Task({task, onEdit, onDelete, onStartTask, onFinishTask}: TaskProp) {
+export function TaskComponent({task, onEdit, onDelete, onStartTask, onFinishTask}: TaskProp) {
 
   function getStatusClass():string {
     if(task.status == "PENDENTE") return "pending"
