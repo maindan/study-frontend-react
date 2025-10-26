@@ -13,6 +13,8 @@ import { TopicSheet } from '@/components/TopicSheet/TopicSheet'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useQueryClient } from '@tanstack/react-query'
 import { Paginator } from '@/components/core/Paginator/Paginator'
+import { StudyInfo } from '@/components/study-info/StudyInfo'
+import { useStudyStore } from '@/states/StudyState'
 
 const ITEMS_PER_PAGE = 6
 
@@ -26,6 +28,8 @@ export function Tasks() {
   });
   const [topicSelected, setTopicSelected] = useState<Topic | null>(null);
   const [topics, setTopics] = useState<Topic[]>([]);
+  const [currentTopic, setCurrentTopic] = useState<Topic | null>(null);
+  const studyState = useStudyStore((state) => state.getStudy);
   
   const queryClient = useQueryClient();
   
@@ -36,7 +40,11 @@ export function Tasks() {
   
   useEffect(() => {
     setTopics(responseData ? responseData.sort((a, b) => a.id - b.id) : [])
-  }, [responseData])
+  }, [responseData]);
+
+  useEffect(() => {
+    handleCurrentTopic();
+  }, [studyState])
   
   const paginatedTopics = useMemo(() => {
     if (!topics) return [];
@@ -83,6 +91,15 @@ export function Tasks() {
     }
   }
 
+  function handleCurrentTopic(): void {
+    if(studyState()?.current_task_id) {
+      const topic = topics.find((item) => item.id === studyState()?.current_topic_id);
+      if(topic) {
+        setCurrentTopic(topic);
+      }
+    }
+  }
+
   return (
     <PageContainer>
       <>
@@ -111,9 +128,12 @@ export function Tasks() {
           </div>
 
           <div className='flex flex-col w-full'>
+
             <section className="h-50 border border-black rounded-xl bg-black flex items-center justify-center">
-              <h2 className="text-white font-bold">Pomodoro</h2>
+              {/* <h2 className="text-white font-bold">Pomodoro</h2> */}
+              <StudyInfo currentTopic={currentTopic} />
             </section>
+
             <section className={`py-3 px-2 h-70 ${topics && topics.length !== 0 ? 'grid grid-cols-1 md:grid-cols-3' : ''} gap-2 rounded-xl mt-2`}>
               {topicsLoading ? (
                 <Skeleton className="w-1/3 h-30 rounded-2xl" />

@@ -1,7 +1,8 @@
 import Stepper, { Step } from "@/components/Stepper";
 import { DialogComponent } from "@/components/shared/Dialog/DialogComponent";
+import axios from "axios";
 import { Loader2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export function PasswordRecovery({ open, onOpenChange }: { open: boolean; onOpenChange: (v: boolean) => void }) {
@@ -13,47 +14,65 @@ export function PasswordRecovery({ open, onOpenChange }: { open: boolean; onOpen
   const [loading, setLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
 
+  const urlBase = import.meta.env.VITE_API_BASE_URL
+
+  // Validações de cada step
   const isEmailValid = email.includes("@");
   const isCodeValid = code.length === 6;
-  const isPasswordValid = password.length >= 6 && password === confirm;
+  const isPasswordValid = password.trim().length >= 6 && password === confirm;
+  
+  useEffect(() => {
+    setEmail('');
+    setCode('');
+    setPassword('');
+    setConfirm('');
+    setLoading(false);
+  }, [open])
 
-  const handleNext = async (step: number) => {
-    try {
-      setLoading(true);
-      if (step === 1) {
-        // Chamada para enviar e-mail
-        const res = await fetch("/auth/recovery/request", {
-          method: "POST",
-          body: JSON.stringify({ email }),
-        });
-        if (!res.ok) toast.error("Erro ao enviar e-mail");
-      }
-      if (step === 2) {
-        // Verificação do código
-        const res = await fetch("/auth/recovery/verify", {
-          method: "POST",
-          body: JSON.stringify({ email, code }),
-        });
-        if (!res.ok) toast.error("Código inválido");
-      }
-      if (step === 3) {
-        // Atualizar senha
-        const res = await fetch("/api/reset-password", {
-          method: "POST",
-          body: JSON.stringify({ email, password }),
-        });
-        if (!res.ok) toast.error("Erro ao redefinir senha");
-        onOpenChange(false); // fecha o dialog
-      }
-
-      return true; // permite avançar
-    } catch (err) {
-      console.error(err);
-      alert((err as Error).message);
-      return false; // bloqueia avanço
-    } finally {
-      setLoading(false);
+  async function handleNext(step: number): Promise<boolean> {
+    setLoading(true);
+    
+    if (step === 1) {
+      return axios.post(`${urlBase}/auth/recovery/request`, { email })
+        .then(() => {
+          toast.success("Se o e-mail estiver cadastrado no banco, um código de confirmação será enviado.");
+          return true;
+        })
+        .catch(err => {
+          toast.error(err?.response?.data?.message || "Erro ao enviar e-mail.");
+          return false;
+        })
+        .finally(() => setLoading(false));
     }
+
+    if (step === 2) {
+      return axios.post(`${urlBase}/auth/recovery/verify`, { email, otpCode: code })
+        .then(() => {
+          toast.success("Código verificado com sucesso!");
+          return true;
+        })
+        .catch(err => {
+          toast.error(err?.response?.data?.message || "Código inválido.");
+          return false;
+        })
+        .finally(() => setLoading(false));
+    }
+
+    if (step === 3) {
+      return axios.post(`${urlBase}/auth/recovery/update`, { email, otpCode: code, password })
+        .then(() => {
+          toast.success("Senha atualizada com sucesso!");
+          onOpenChange(false);
+          return true;
+        })
+        .catch(err => {
+          toast.error(err?.response?.data?.message || "Erro ao atualizar senha.");
+          return false;
+        })
+        .finally(() => setLoading(false));
+    }
+
+    return Promise.resolve(false);
   };
 
   return (
