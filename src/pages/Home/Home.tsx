@@ -7,6 +7,7 @@ import { DrawerComponent } from '@/components/shared/DrawerComponent/DrawerCompo
 import { RegisterForm } from '@/components/core/RegisterForm/RegisterForm';
 import { useAuthStore } from '@/states/AuthState';
 import Silk from '@/components/react-bits/Silk';
+import {motion} from 'motion/react'
 
 type HomeProps = {
   openLogin: () => void
@@ -30,8 +31,8 @@ export function Home({openLogin}: HomeProps) {
 
   return (
 
-      <div className={`w-11/12 h-10/12 mx-auto mt-7 border-2 rounded-2xl relative text-white`}>
-        <div className="absolute w-full h-full -z-10 rounded-2xl overflow-hidden">
+      <div className={`w-12/12 h-12/12 relative text-white`}>
+        <div className="absolute w-full h-full -z-10 overflow-hidden">
           <Silk
             speed={5}
             scale={1}
@@ -44,9 +45,9 @@ export function Home({openLogin}: HomeProps) {
           <RegisterForm  openLogin={onOpenLogin} />
         </DrawerComponent>
         <div className="w-full h-full flex flex-col items-center justify-center gap-5 px-4 z-10">
-          <div className="flex items-center gap-2 text-2xl">
-            <h1 className='font-bold'>Study</h1>
-            <Hexagon />
+          <div className="flex items-center gap-2">
+            <Hexagon size={40} />
+            <h1 className='font-bold text-5xl'>Study</h1>
           </div>
           <p className='text-3xl text-center sm:text-start'>Organize seu aprendizado, alcance seus objetivos.</p>
           <div className='flex gap-2'>
