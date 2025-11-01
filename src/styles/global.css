@@ -176,3 +176,29 @@ html, body, #root {
 .bg-border {
     background: #7a7a7a;
 }
+
+.scroll-gutter {
+  overflow: overlay;
+  scrollbar-gutter: stable;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scroll-gutter::-webkit-scrollbar {
+  background: rgba(0,0,0,0.2);
+  width: 3px;
+}
+
+.scroll-gutter::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scroll-gutter::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.7);
+  border-radius: 20px;
+  width: 10px;
+}
+
+.scroll-gutter::-webkit-scrollbar-corner {
+  background: white;
+  border-radius: 20px;
+}
