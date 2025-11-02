@@ -178,7 +178,6 @@ html, body, #root {
 }
 
 .scroll-gutter {
-  overflow: overlay;
   scrollbar-gutter: stable;
   -webkit-overflow-scrolling: touch;
 }
@@ -201,4 +200,8 @@ html, body, #root {
 .scroll-gutter::-webkit-scrollbar-corner {
   background: white;
   border-radius: 20px;
+}
+
+.poppins {
+  font-family: "Poppins", sans-serif !important;
 }

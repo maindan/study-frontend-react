@@ -12,7 +12,7 @@ import { Header } from "./components/core/Header/Header";
 import {PrivateRouter} from "./components/core/PrivateRouter/PrivateRouter";
 import { DrawerComponent } from "./components/shared/DrawerComponent/DrawerComponent";
 import { LoginForm } from "./components/core/LoginForm/LoginForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Tasks } from "./pages/Tasks/Tasks";
 import { Contact } from "./pages/Contact/Contact";
 import { PasswordRecovery } from "./components/core/PasswordRecovery/PasswordRecovery";
@@ -27,6 +27,22 @@ export function App() {
     setShowLogin(false);
     setTimeout(() => {setShowRecoveryModal(true)}, 100)
   }
+
+  useEffect(() => {
+    let locomotive: any
+
+      ;(async () => {
+        const LocomotiveScroll = (await import("locomotive-scroll")).default
+        locomotive = new LocomotiveScroll({
+          smooth: true,
+          multiplier: 1.2,
+          lerp: 0.08,
+          smartphone: { smooth: true }
+        })
+      })()
+
+      return () => locomotive && locomotive.destroy()
+    }, [])
 
   return (
     <BrowserRouter>

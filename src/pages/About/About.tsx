@@ -7,12 +7,41 @@ import ScrollVelocity from '@/components/react-bits/ScrollVelocity'
 import { Button } from '@/components/ui/button'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Hexagon } from 'lucide-react'
-import React, { useLayoutEffect, useRef } from 'react'
-import {motion} from "motion/react"
+import { AlarmClockCheck, CircleCheckBig, Hexagon, PackagePlus } from 'lucide-react'
+import React, { useEffect, useLayoutEffect, useRef } from 'react'
+import {motion, useScroll} from "motion/react"
 
 export function About({openLogin}: {openLogin: () => void}) {
-  
+
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const boxRef = useRef<HTMLDivElement | null>(null);
+
+  useLayoutEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const container = containerRef.current;
+    const box = boxRef.current;
+
+    if (!container || !box) return;
+
+    gsap.fromTo(
+      box,
+      { width: "10rem", height: "12rem" },
+      {
+        width: "100%",
+        height: "100%",
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: container,
+          start: "-=300",
+          end: "+=500",
+          scrub: true,
+        },
+      }
+    );
+
+  }, []);
+
   return (
     <div className={`w-12/12 h-full relative text-white scroll-gutter`}>
       <div className="absolute w-full h-full -z-10 overflow-hidden bg-black">
@@ -29,10 +58,10 @@ export function About({openLogin}: {openLogin: () => void}) {
           animate={{opacity: 1}}
           transition={{
             duration: 0.5,
-            delay: 0.4,
+            delay: 0.2,
             ease: 'easeIn'
           }}
-          className="flex flex-col items-center sm:items-start justify-center w-full sm:w-1/2 text-left"
+          className="flex flex-col items-center sm:items-start justify-center w-full sm:w-1/2 text-left sticky"
         >
           <h2 className="text-3xl sm:text-4xl font-bold leading-snug">
             Study - transforme seus estudos em progresso real!
@@ -43,125 +72,83 @@ export function About({openLogin}: {openLogin: () => void}) {
           </p>
         </motion.div>
         <div className="w-full sm:w-1/2 flex flex-col items-center justify-center gap-2 sm:mt-0">
-          {/* <motion.div 
-            initial={{x: -20, opacity: 0}}
-            animate={{x: 0, opacity: 1}}
-            transition={{
-              duration: 0.5,
-              delay: 0.4,
-              ease: 'easeIn'
-            }}
-            className="w-60 h-15 backdrop-blur-lg bg-gradient-to-br from-red-500/20 to-pink-500/20 rounded-3xl border border-white/10 flex items-center justify-center">
-            <span className="text">Crie tópicos</span>
-          </motion.div>
-          <motion.div 
-            initial={{x: -30, opacity: 0}}
-            animate={{x: 0, opacity: 1}}
-            transition={{
-              duration: 0.5,
-              delay: 0.8,
-              ease: 'easeIn'
-            }}
-            className="w-60 h-15 ml-10 backdrop-blur-lg bg-gradient-to-br from-green-100/20 to-lime-400/20 rounded-3xl border border-white/10 flex items-center justify-center">
-            <span className="">Adicione atividades</span>
-          </motion.div>
-          <motion.div 
-            initial={{x: -40, opacity: 0}}
-            animate={{x: 0, opacity: 1}}
-            transition={{
-              duration: 0.5,
-              delay: 1.2,
-              ease: 'easeIn'
-            }}
-            className="w-60 h-15 ml-20 backdrop-blur-lg bg-gradient-to-br from-green-100/20 to-lime-400/20 rounded-3xl border border-white/10 flex items-center justify-center">
-            <span className="">Gerencie seus estudos</span>
-          </motion.div> */}
+        
         </div>
       </div>
-      <div className="w-full h-screen bg-black z-10"></div>
 
-
-        {/* <div className="flex w-full h-full z-0 flex-col sm:flex-row">
-
-          <h2 className="text-4xl text-white">Study, o seu gerenciador de estudos!</h2>
+      <div className="w-full h-[120vh] bg-black relative border-0 sm:border-b-1 border-[#9b23ea] flex items-center justify-center" ref={containerRef}>
+        <div 
+          ref={boxRef}
+          className="w-40 h-50 bg-gradient-to-b from-[#5f72bd] to-[#9b23ea] absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2"
+        ></div>
+        <span 
+          className="text-4xl sm:text-5xl md:text-4xl font-bold italic z-10 uppercase text-center max-w-4xl px-4 poppins"
+        >
+          TRANSFORME O FOCO EM RESULTADO.
+          <br className="hidden sm:block" />
+          COMECE SEU PROGRESSO.
+        </span>
+      </div>
+      <div className="w-full h-[300vh] bg-gradient-to-b from-[#9b23ea] to-[#5f72bd] relative px-5">
+        <div className="w-full h-1/3 flex flex-col sm:flex-row">
+            <div className="w-full relative text-center py-35">
+              <motion.div 
+              initial={{opacity: 0}} whileInView={{opacity: 1}} transition={{delay: 0.4}}
+              className="sticky flex items-center flex-col top-35 font-normal text-3xl sm:text-4xl">
+                <PackagePlus size={80} />
+                <span className="poppins">Gerenciamento por tópicos</span>
+              </motion.div>
+            </div>
+            <div className="w-full h-full p-5 flex items-center">
+              <motion.span initial={{opacity: 0}} whileInView={{opacity: 1}} className="text-lg sm:text-2xl">
+                No Study, a sua jornada de aprendizado é estruturada através de um sistema intuitivo de Gerenciamento por Tópicos. 
+                Crie Tópicos específicos para qualquer tema, desde "Cálculo II" até "História Moderna", e desdobre-os em Atividades e tarefas detalhadas. 
+                Com o acompanhamento de progresso em tempo real, você visualiza instantaneamente o percentual de conclusão das atividades e o quanto falta para dominar cada assunto. 
+                Transforme grandes metas em etapas gerenciáveis e mantenha a motivação alta ao ver seu avanço.
+              </motion.span>
+            </div>
         </div>
-
-        <div className="h-screen bg-white">
-          <h2>Oláaaaaaaaaaaaa</h2>
-        </div> */}
-        
-        {/* <div className="w-full bg-black flex flex-col items-center justify-center relative">
-          <div className="flex gap-2 items-center z-10">
-            <Hexagon color='white' size={30} />
-            <h1 className='text-white font-semibold text-4xl'>Study</h1>
-          </div>
-          <div className="flex gap-2 items-center mt-3 flex-col sm:flex-row">
-            <h2 className="text-white text-3xl sm:text-4xl text-center z-10">Organize seus estudos de forma</h2>
-            <RotatingText
-              texts={['Simples', 'Produtiva', 'Intuitiva']}
-              mainClassName="px-2 sm:px-2 md:px-3 bg-white text-black overflow-hidden py-0.5 sm:py-1 md:py-1 justify-center rounded-md text-3xl font-semibold"
-              staggerFrom={"last"}
-              initial={{ y: "100%" }}
-              animate={{ y: 0 }}
-              exit={{ y: "-120%" }}
-              staggerDuration={0.025}
-              splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1 md:pb-1"
-              transition={{ type: "spring", damping: 30, stiffness: 400 }}
-              rotationInterval={2500}
-            />
-          </div>
-        </div> */}
-
-        {/* <div className="w-full h-90 bg-black">
-          <ScrollVelocity
-            texts={['Study', 'Aprenda com qualidade']} 
-            velocity={20} 
-            className="custom-scroll-text text-white"
-          />
+        <div className="w-full h-1/3 flex flex-col sm:flex-row">
+            <div className="w-full relative text-center py-35">
+              <motion.div 
+              initial={{opacity: 0}} whileInView={{opacity: 1}} transition={{delay: 0.4}}
+              className="sticky flex items-center flex-col top-35 font-normal text-3xl sm:text-4xl">
+                <CircleCheckBig size={80} />
+                <span className="poppins">Gerenciamento por tópicos</span>
+              </motion.div>
+            </div>
+            <div className="w-full h-full p-5 flex items-center">
+              <motion.span initial={{opacity: 0}} whileInView={{opacity: 1}} className="text-lg sm:text-2xl">
+                Dentro de cada Tópico principal, o Study permite que você adicione Atividades, transformando-as em subitens essenciais para desmembrar as informações. 
+                Essas Atividades funcionam como etapas micro-focadas: seja "Revisar Equações de 2º Grau", "Fazer Exercícios da Página 45" ou "Assistir à Aula 
+                sobre Revolução Francesa". Essa granularidade permite que você destrinche o tema principal em passos práticos, garantindo que nenhum detalhe seja 
+                negligenciado no seu plano de estudos. Cada atividade concluída alimenta diretamente a barra de progresso do Tópico, fornecendo uma visão clara do domínio do conteúdo.
+               </motion.span>
+            </div>
         </div>
-
-        <div className="w-full h-[600px] bg-black px-6">
-          <ScrollReveal
-            baseOpacity={0}
-            enableBlur={true}
-            baseRotation={15}
-            blurStrength={10}
-            textClassName="text-white px-5 text-xl"
-          >
-            O Study nasceu para ajudar estudantes e profissionais a focarem no que importa: 
-            aprender mais em menos tempo, com organização, clareza e disciplina.
-          </ScrollReveal>
+        <div className="w-full h-1/3 flex flex-col sm:flex-row">
+            <div className="w-full relative text-center py-35">
+              <motion.div 
+              initial={{opacity: 0}} whileInView={{opacity: 1}} transition={{delay: 0.4}}
+              className="sticky flex items-center flex-col top-35 font-normal text-3xl sm:text-4xl gap-5">
+                <AlarmClockCheck size={80} />
+                <span className="poppins">Gerenciamento por tópicos</span>
+              </motion.div>
+            </div>
+            <div className="w-full h-full p-5 flex items-center">
+              <motion.span initial={{opacity: 0}} whileInView={{opacity: 1}} className="text-lg sm:text-2xl">
+                O Study potencializa sua produtividade ao aplicar o renomado Método Pomodoro diretamente em suas Atividades. Para cada subitem do seu Tópico, 
+                você pode iniciar um ciclo de concentração cronometrado, garantindo que o tempo dedicado seja de alta qualidade e livre de distrações. 
+                Nosso sistema de Pomodoro não apenas gerencia seus blocos de estudo e pausas curtas, mas também registra o tempo real gasto em cada atividade. 
+                Assim, você não só melhora o foco, como também adquire dados valiosos para otimizar seu planejamento e entender exatamente onde seu tempo de estudo está sendo investido.
+              </motion.span>
+            </div>
         </div>
-        
-        <div className="w-full h-40 bg-black px-4 text-center">
-          <ScrollFloat
-            animationDuration={1}
-            ease='back.inOut(2)'
-            scrollStart='center bottom+=50%'
-            scrollEnd='bottom bottom-=40%'
-            stagger={0.03}
-            textClassName='text-white'
-          >
-            Study
-          </ScrollFloat>
-        </div>
-
-        <div className="w-full h-[600px] bg-black flex items-center justify-center gap-3 models px-3" ref={el}>
-          <div className="w-1/3 h-40 models-items  p-3 flex items-center" id="model-1">
-              <p className='text-white text-2xl font-semibold text-center'>Crie tópicos de estudos</p>
-          </div>
-          <div className="w-1/3 h-40 models-items p-3 flex items-center" id="model-2">
-            <p className='text-white text-2xl font-semibold text-center'>Adicione atividades aos tópicos</p>
-          </div>
-          <div className="w-1/3 h-40 models-items p-3 flex items-center" id="model-3">
-            <p className='text-white text-2xl font-semibold text-center'>Gerêncie seus estudos com método Pomodoro</p>
-          </div>
-        </div>
-
-        <div className="w-full h-[300px] bg-black rounded-b-2xl flex flex-col items-center justify-start">
-          <h3 className='text-white font-bold text-3xl text-center mb-3'>Entre e comece agora a organizar<br/> os seus estudos!</h3>
-          <Button variant="secondary" className='cursor-pointer' onClick={openLogin}>Entrar</Button>
-        </div> */}
+      </div>
+      <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-b to-[#9b23ea] from-[#5f72bd] px-10">
+          <span className="text-2xl poppins font-normal text-center">Inicie agora sua jornada até o sucesso!</span>
+          <Button className='mt-3 cursor-pointer' onClick={openLogin}>Entrar</Button>
+      </div>
     </div>
   )
 }
